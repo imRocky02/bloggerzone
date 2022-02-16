@@ -34,6 +34,33 @@ def home_view(request, *args, **kwargs):
     }
     return render(request, "blog/index.html", context_data)
 
+def archive_post(request, *args, **kwargs):
+    posts = Post.objects.filter(status="ARCHIVED")
+    context_data = {
+        "title": "ARCHIVE POSTS",
+        "posts": posts,
+    }
+    return render(request, "blog/user_post.html", context_data)
+
+
+def draft_post(request, *args, **kwargs):
+    posts = Post.objects.filter(status="DRAFT")
+    context_data = {
+        "title": "DRAFT POSTS",
+        "posts": posts,
+    }
+    return render(request, "blog/user_post.html", context_data)
+
+def user_post(request, *args, **kwargs):
+    posts = Post.objects.filter(author=request.user, status="PUBLISHED")
+    context_data = {
+        "title": "MY POSTS",
+        "posts": posts,
+    }
+    return render(request, "blog/user_post.html", context_data)
+
+
+
 class PostListView(ListView):
     model = Post
     template_name = "blog/index.html"
