@@ -28,6 +28,8 @@ from django.contrib.auth.mixins import (
 def home_view(request, *args, **kwargs):
     # import pdb;pdb.set_trace()
     posts = Post.objects.filter(status="PUBLISHED")
+    ordering = ["-modified_at"]
+    paginate_by = 10
     context_data = {
         "title": "HOME | POSTS",
         "posts": posts,
@@ -67,7 +69,7 @@ class PostListView(ListView):
     queryset = Post.objects.filter(status="PUBLISHED")
     context_object_name = "posts"
     ordering = ["-modified_at"]
-    paginate_by = 5
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data()

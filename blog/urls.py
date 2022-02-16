@@ -4,7 +4,8 @@ from django.urls import path
 from blog.views import *
 
 urlpatterns = [
-   path("", home_view, name="home"),
+   path("", post_list_view, name="home"),
+   path("home", post_list_view, name="home"),
    path("draft", draft_post, name="draft"),
    path("archive", archive_post, name="archive"),
    path("my-post", user_post, name="pub_post"),
