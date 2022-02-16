@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, full_name, dob, email, password=None):
         """ 
@@ -9,6 +10,12 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError("User must have an email address")
+
+        if not full_name:
+            raise ValueError("You have to fill name field")
+
+        if not dob:
+            raise ValueError("You have to fill dob field")
 
         user = self.model(
             email=self.normalize_email(email),
@@ -61,19 +68,9 @@ class CustomUser(AbstractBaseUser):
         unique=True,
     )
 
-    full_name = models.CharField(
-        verbose_name='full_name',
-        max_length=80,
-        unique=False,
-        
-        
-    )
+    full_name = models.CharField(max_length=250)
 
-    dob = models.DateField(
-        verbose_name= 'date_of_birth',
-        max_length=10,
-        unique=False,
-    )
+    dob = models.DateField('Date OF Birth')
     
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
@@ -83,7 +80,8 @@ class CustomUser(AbstractBaseUser):
 
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name','dob']
+    REQUIRED_FIELDS = []
+
 
     
     def full_name(self):

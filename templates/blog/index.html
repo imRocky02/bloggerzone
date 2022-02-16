@@ -23,6 +23,11 @@
                     <a href="{% url 'post_detail' post.pk post.slug %}">{{post.author}}</a>
                     on {{post.created_at|date:"d, F Y"}}
                     | modified on {{post.modified_at|date:"d, F Y"}}
+                    | {% for tag in posts.tags.all %}
+                        {{tag.name}}
+                        {{tag.title}}
+                        {{tag.value}}
+                      {% endfor %}
                 </p>
                 </div>
                 <!-- Divider-->
